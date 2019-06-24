@@ -39,7 +39,7 @@ public class SpringbootDemoApplicationTests {
     {
         User user = new User();
         user.setId(1);
-        user.setUsername("黄富枝");
+        user.setUsername("null");
         user.setAge(21);
         user.setPassword("123456");
         redisTemplate.opsForValue().set("user",user);
