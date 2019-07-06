@@ -9,6 +9,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringbootDemoApplicationTests {
@@ -37,14 +40,27 @@ public class SpringbootDemoApplicationTests {
     @Test
     public void TestRedisTemplate()
     {
+        /**过期时间， 单位：秒**/
+        long DEFAULT_EXPIRE = 60;
         User user = new User();
         user.setId(1);
         user.setUsername("null");
         user.setAge(21);
         user.setPassword("123456");
         redisTemplate.opsForValue().set("user",user);
+        /**设置过期时间*/
+        redisTemplate.expire("user",DEFAULT_EXPIRE, TimeUnit.SECONDS);
         User temp=(User)redisTemplate.opsForValue().get("user");
         System.out.println(temp.getUsername());
+    }
+
+    /**
+     * 通过UUID生成唯一标识
+     */
+    @Test
+    public void  UUIDTest(){
+        String uuid= UUID.randomUUID().toString();
+        System.out.println(uuid);
     }
 
 }
